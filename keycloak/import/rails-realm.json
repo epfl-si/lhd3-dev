@@ -22,6 +22,19 @@
   } ],
   "clients" : [
     {
+      "clientId" : "LHDv3",
+      "baseUrl" : "http://localhost:3000/",
+      "enabled" : true,
+      "redirectUris" : [ "*" ],
+      "webOrigins" : [ "*" ],
+      "standardFlowEnabled" : true,
+      "implicitFlowEnabled" : false,
+      "directAccessGrantsEnabled" : true,
+      "publicClient" : true,
+      "frontchannelLogout" : true,
+      "protocol" : "openid-connect"
+    },
+    {
       "clientId" : "graphiql/LoginButton",
       "baseUrl" : "http://localhost:3000/",
       "enabled" : true,
