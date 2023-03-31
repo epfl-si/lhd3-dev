@@ -42,7 +42,6 @@ async function keybase_fs_read(path) {
 }
 
 async function run() {
-	// TODO: improve.
 	await gitCloneAll();
 	await $`yarn`;
 	await $`cd keycloak && docker compose up -d`;
@@ -63,8 +62,12 @@ ALLOWED_GROUPS=lhd_acces_lecture
 }
 
 async function clean() {
-	// TODO: improve.
-	await unclone();
+	await $`cd keycloak && docker compose down`;
+}
+
+async function purge() {
+	await clean();
+	await $`docker volume rm keycloak_mariadb`;
 }
 
 async function parseCmdLineDoThingsAndCleanup() {
@@ -80,5 +83,11 @@ async function parseCmdLineDoThingsAndCleanup() {
 	} else if (argv._[0] === 'clean') {
 		argv._.shift();
 		await clean(...argv._);
+	} else if (argv._[0] === 'purge') {
+		argv._.shift();
+		await purge(...argv._);
+	} else if (argv._[0] === 'unclone') {
+		argv._.shift();
+		await unclone(...argv._);
 	}
 }
