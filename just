@@ -54,7 +54,7 @@ async function run() {
 	await fs.writeFile(
 		'./backend/.env',
 		`
-LHD_DB_URL=mysql://lhd_admin:${lhdTestDbPassword}@localhost:33006/SST_lhd
+LHD_DB_URL=mysql://lhd_test:${lhdTestDbPassword}@localhost:33006/SST_lhd
 ALLOWED_GROUPS=lhd_acces_lecture
 `
 	);
