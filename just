@@ -36,6 +36,11 @@ async function gitCloneAll() {
 	}
 }
 
+async function keybase_fs_read(path) {
+	const p = await $`keybase fs read ${path}`.quiet();
+	return p.stdout;
+}
+
 async function run() {
 	// TODO: improve.
 	await gitCloneAll();
