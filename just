@@ -5,11 +5,34 @@ const gitRepositories = [
 	{ git: 'git@github.com:epfl-si/lhd.graphql.git', subdir: 'backend' },
 ];
 
-console.log(argv._); // XXX
 await parseCmdLineDoThingsAndCleanup();
 
 function help() {
-	echo(chalk.blue('Ça gaze ?'));
+	echo(
+		chalk.blue(`
+Usage: just [command]
+
+Commands:
+  run      Clone git repositories, install dependencies, start servers.
+  clean    Stop and remove containers started by keycloak compose.
+  purge    Remove the keycloak_mariadb docker volume used by keycloak.
+  unclone  Remove cloned repositories.
+
+Options:
+  --help
+  --version
+
+Examples:
+  just run OR just
+  just clean
+  just purge
+  just unclone
+  `)
+	);
+}
+
+function version() {
+	echo(chalk.blue(`just v0.0.1`));
 }
 
 async function unclone() {
@@ -43,11 +66,9 @@ async function keybase_fs_read(path) {
 
 async function run() {
 	await gitCloneAll();
-	await $`yarn`;
 	await $`cd keycloak && docker compose up -d`;
 	await $`cd frontend && yarn`;
 	await $`cd backend && yarn`;
-	// TODO: Write .env here.
 	const lhdTestDbPassword = YAML.parse(
 		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
 	).mysql.lhd_v2.password;
@@ -77,6 +98,9 @@ async function parseCmdLineDoThingsAndCleanup() {
 	if (argv.help || argv._[0] === 'help') {
 		argv._.shift();
 		help(...argv._);
+	} else if (argv.version || argv._[0] === 'version') {
+		argv._.shift();
+		version(...argv._);
 	} else if (argv._[0] === 'run') {
 		argv._.shift();
 		await run(...argv._);
