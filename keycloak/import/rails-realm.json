@@ -1,6 +1,13 @@
 {
   "realm" : "LHD",
   "enabled" : true,
+  "groups" : [ {
+    "name" : "lhd_acces_lecture",
+    "path" : "/lhd_acces_lecture",
+    "attributes" : {
+      "groups" : [ "lhd_acces_lecture" ]
+    }
+  } ],
   "users" : [ {
     "username" : "demo",
     "enabled" : true,
@@ -18,7 +25,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-rails" ],
     "notBefore" : 0,
-    "groups" : [ ]
+    "groups" : [ "/lhd_acces_lecture" ]
   } ],
   "clients" : [
     {
@@ -32,7 +39,21 @@
       "directAccessGrantsEnabled" : true,
       "publicClient" : true,
       "frontchannelLogout" : true,
-      "protocol" : "openid-connect"
+      "protocol" : "openid-connect",
+      "protocolMappers": [
+        {
+          "name": "Groups Mapper",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-group-membership-mapper",
+          "config": {
+            "full.path": false,
+            "id.token.claim": true,
+            "access.token.claim": true,
+            "claim.name": "groups",
+            "userinfo.token.claim": true
+          }
+        }
+      ]
     }
   ]
 }
