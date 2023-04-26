@@ -59,6 +59,13 @@ async function gitCloneAll() {
 	}
 }
 
+async function gitPullAll() {
+	for (const toClone of gitRepositories) {
+		const { subdir, git } = toClone;
+		await $`cd ${subdir}; git pull --rebase --autostash`;
+	}
+}
+
 async function keybase_fs_read(path) {
 	const p = await $`keybase fs read ${path}`.quiet();
 	return p.stdout;
@@ -139,6 +146,9 @@ async function parseCmdLineDoThingsAndCleanup() {
 	} else if (argv._[0] === 'auth') {
 		argv._.shift();
 		await runAuth(...argv._);
+	} else if (argv._[0] === 'pull') {
+		argv._.shift();
+		await gitPullAll(...argv._);
 	} else if (argv._[0] === 'clean') {
 		argv._.shift();
 		await clean(...argv._);
