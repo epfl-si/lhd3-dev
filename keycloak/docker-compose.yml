@@ -21,6 +21,7 @@ services:
       - "127.0.0.1:8080:8080"
     volumes:
       - ./import:/opt/keycloak/data/import
+      - ./themes/EPFL:/opt/keycloak/themes/EPFL
   # MariaDB is used by Keycloak for persistence. The Rails application
   # itself uses sqlite in development (which unfortunately, is not an
   # option for Keycloak at the moment).

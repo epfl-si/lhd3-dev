@@ -1,6 +1,7 @@
 {
   "realm" : "LHD",
   "enabled" : true,
+  "loginTheme": "EPFL",
   "groups" : [ {
     "name" : "lhd_acces_lecture",
     "path" : "/lhd_acces_lecture",

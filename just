@@ -64,9 +64,21 @@ async function keybase_fs_read(path) {
 	return p.stdout;
 }
 
+async function install_keycloak_login_theme() {
+	if (await fs.exists('keycloak')) {
+		if (!(await fs.exists('keycloak/themes'))) {
+			await $`mkdir -p keycloak/themes`;
+		}
+		if (!(await fs.exists('keycloak/themes/EPFL'))) {
+			await $`git clone git@github.com:epfl-si/keycloak.theme-login-epfl.git keycloak/themes/EPFL`;
+		}
+	}
+}
+
 async function run() {
 	await gitCloneAll();
 	await $`cd keycloak && docker compose up -d`;
+	await install_keycloak_login_theme();
 	await $`cd frontend && yarn`;
 	await $`cd backend && yarn`;
 	const lhdTestDbPassword = YAML.parse(
@@ -104,6 +116,7 @@ ALLOWED_GROUPS=lhd_acces_lecture
 
 async function runAuth() {
 	await gitCloneAll();
+	await install_keycloak_login_theme();
 	await $`cd keycloak && docker compose up -d`;
 	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "keycloak" "cd keycloak && docker compose logs -f keycloak"`;
 }
@@ -148,5 +161,8 @@ async function parseCmdLineDoThingsAndCleanup() {
 	} else if (argv._[0] === 'unclone') {
 		argv._.shift();
 		await unclone(...argv._);
+	} else if (argv._[0] === 'theme') {
+		argv._.shift();
+		await install_keycloak_login_theme();
 	}
 }

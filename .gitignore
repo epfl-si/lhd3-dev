@@ -1,4 +1,6 @@
 /backend/
 /frontend/
+/keycloak/themes/*
+!/keycloak/themes/.gitkeep
 /just*.mjs
 /node_modules/
