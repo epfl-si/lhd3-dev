@@ -74,12 +74,38 @@ async function run() {
 	).mysql.lhd_v2.password;
 	await fs.writeFile(
 		'./backend/.env',
-		`
-LHD_DB_URL=mysql://lhd_test:${lhdTestDbPassword}@localhost:33006/SST_lhd
+		`LHD_DB_URL=mysql://lhd_test:${lhdTestDbPassword}@localhost:33006/SST_lhd
 ALLOWED_GROUPS=lhd_acces_lecture
 `
 	);
 	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend,keycloak" "cd frontend && yarn start" "cd backend && yarn start" "cd keycloak && docker compose logs -f keycloak"`;
+}
+
+async function runFrontend() {
+	await gitCloneAll();
+	await $`cd frontend && yarn`;
+	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend" "cd frontend && yarn start"`;
+}
+
+async function runBackend() {
+	await gitCloneAll();
+	await $`cd backend && yarn`;
+	const lhdTestDbPassword = YAML.parse(
+		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
+	).mysql.lhd_v2.password;
+	await fs.writeFile(
+		'./backend/.env',
+		`LHD_DB_URL=mysql://lhd_test:${lhdTestDbPassword}@localhost:33006/SST_lhd
+ALLOWED_GROUPS=lhd_acces_lecture
+`
+	);
+	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "backend" "cd backend && yarn start"`;
+}
+
+async function runAuth() {
+	await gitCloneAll();
+	await $`cd keycloak && docker compose up -d`;
+	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "keycloak" "cd keycloak && docker compose logs -f keycloak"`;
 }
 
 async function clean() {
@@ -104,6 +130,15 @@ async function parseCmdLineDoThingsAndCleanup() {
 	} else if (argv._[0] === 'run') {
 		argv._.shift();
 		await run(...argv._);
+	} else if (argv._[0] === 'frontend') {
+		argv._.shift();
+		await runFrontend(...argv._);
+	} else if (argv._[0] === 'backend') {
+		argv._.shift();
+		await runBackend(...argv._);
+	} else if (argv._[0] === 'auth') {
+		argv._.shift();
+		await runAuth(...argv._);
 	} else if (argv._[0] === 'clean') {
 		argv._.shift();
 		await clean(...argv._);
