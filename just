@@ -1,7 +1,7 @@
 #!/usr/bin/env -S npm exec --yes --package=zx@latest zx --
 
 const gitRepositories = [
-	{ git: 'git@gitlab.epfl.ch:lhd/lh3.frontend.git', subdir: 'frontend' },
+	{ git: 'git@github.com:epfl-si/lhd.frontend.git', subdir: 'frontend' },
 	{ git: 'git@github.com:epfl-si/lhd.graphql.git', subdir: 'backend' },
 ];
 
