@@ -60,6 +60,7 @@ async function gitCloneAll() {
 }
 
 async function gitPullAll() {
+	await $`git pull --rebase --autostash`;
 	for (const toClone of gitRepositories) {
 		const { subdir, git } = toClone;
 		await $`cd ${subdir}; git pull --rebase --autostash`;
