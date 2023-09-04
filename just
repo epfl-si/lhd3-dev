@@ -76,7 +76,7 @@ async function run() {
 	await gitCloneAll();
 	await $`cd keycloak && docker compose up -d`;
 	await $`cd frontend && yarn`;
-	await $`cd backend && yarn`;
+	await $`cd backend && yarn codegen && yarn`;
 	const lhdTestDbPassword = await getLhdDbTestPassword();
 	await fs.writeFile(
 		'./backend/.env',
