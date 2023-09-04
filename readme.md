@@ -18,16 +18,6 @@ Pour utiliser ce fichier de script zx, vous aurez besoin de :
 
 ## Guide d'installation
 
-Clonez le dépôt et installez les dépendances nécessaires. Il est recommandé d'exécuter ces commandes dans le terminal :
-
-```bash
-git clone <repository_url>
-cd <repository_name>
-npm install
-```
-
-## Utilisation
-
 ### Lancement du script
 
 Pour lancer le script `just`, vous pouvez utiliser la commande suivante :
