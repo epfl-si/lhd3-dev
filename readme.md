@@ -18,13 +18,15 @@ Pour utiliser ce fichier de script zx, vous aurez besoin de :
 
 ## Guide d'installation
 
-### Lancement du script
+### Lancement de l'environnement de développement
 
-Pour lancer le script `just`, vous pouvez utiliser la commande suivante :
+Vous pouvez utiliser la commande suivante :
 
 ```bash
 ./just
 ```
+
+Si tout se passe bien, le front-end sera alors disponible à l'adresse http://localhost:3000/
 
 ### Commandes disponibles
 
