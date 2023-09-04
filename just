@@ -99,7 +99,7 @@ async function runBackend() {
 	await $`cd backend && yarn`;
 	const lhdTestDbPassword = YAML.parse(
 		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
-	).mysql.lhd_v2.password;
+	).mysql.lhd_app.password;
 	await fs.writeFile(
 		'./backend/.env',
 		`LHD_DB_URL=mysql://lhd_test:${lhdTestDbPassword}@localhost:33006/SST_lhd
