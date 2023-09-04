@@ -77,9 +77,7 @@ async function run() {
 	await $`cd keycloak && docker compose up -d`;
 	await $`cd frontend && yarn`;
 	await $`cd backend && yarn`;
-	const lhdTestDbPassword = YAML.parse(
-		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
-	).mysql.lhd_v2.password;
+	const lhdTestDbPassword = await getLhdDbTestPassword();
 	await fs.writeFile(
 		'./backend/.env',
 		`LHD_DB_URL=mysql://lhd_test:${lhdTestDbPassword}@localhost:33006/SST_lhd
@@ -87,6 +85,12 @@ ALLOWED_GROUPS=lhd_acces_lecture
 `
 	);
 	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend,keycloak" "cd frontend && yarn start" "cd backend && yarn start" "cd keycloak && docker compose logs -f keycloak"`;
+}
+
+async function getLhdDbTestPassword () {
+	return YAML.parse(
+		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
+	).mysql.lhd_app.password;
 }
 
 async function runFrontend() {
@@ -98,9 +102,7 @@ async function runFrontend() {
 async function runBackend() {
 	await gitCloneAll();
 	await $`cd backend && yarn`;
-	const lhdTestDbPassword = YAML.parse(
-		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
-	).mysql.lhd_app.password;
+	const lhdTestDbPassword = await getLhdDbTestPassword();
 	await fs.writeFile(
 		'./backend/.env',
 		`LHD_DB_URL=mysql://lhd_test:${lhdTestDbPassword}@localhost:33006/SST_lhd
