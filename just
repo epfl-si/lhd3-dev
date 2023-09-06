@@ -72,18 +72,22 @@ async function keybase_fs_read(path) {
 	return p.stdout;
 }
 
-async function run() {
-	await gitCloneAll();
-	await $`cd keycloak && docker compose up -d`;
-	await $`cd frontend && yarn`;
-	await $`cd backend && yarn codegen && yarn`;
-	const lhdTestDbPassword = await getLhdDbTestPassword();
+async function writeBackendDotEnv () {
 	await fs.writeFile(
 		'./backend/.env',
 		`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
 ALLOWED_GROUPS=lhd_acces_lecture
 `
 	);
+}
+
+async function run() {
+	await gitCloneAll();
+	await $`cd keycloak && docker compose up -d`;
+	await $`cd frontend && yarn`;
+	await $`cd backend && yarn codegen && yarn`;
+	const lhdTestDbPassword = await getLhdDbTestPassword();
+	await writeBackendDotEnv ();
 	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend,keycloak" "cd frontend && yarn start" "cd backend && yarn start" "cd keycloak && docker compose logs -f keycloak"`;
 }
 
@@ -103,12 +107,7 @@ async function runBackend() {
 	await gitCloneAll();
 	await $`cd backend && yarn`;
 	const lhdTestDbPassword = await getLhdDbTestPassword();
-	await fs.writeFile(
-		'./backend/.env',
-		`LHD_DB_URL=mysql://lhd_test:${lhdTestDbPassword}@localhost:33006/SST_lhd
-ALLOWED_GROUPS=lhd_acces_lecture
-`
-	);
+	await writeBackendDotEnv ();
 	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "backend" "cd backend && yarn start"`;
 }
 
