@@ -4,7 +4,7 @@ name: lhdv3-keycloak
 
 services:
   keycloak:
-    image: quay.io/keycloak/keycloak
+    image: quay.io/keycloak/keycloak:22.0.4
     command:
       - start-dev
       - --import-realm
