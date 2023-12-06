@@ -3,6 +3,7 @@
 const gitRepositories = [
 	{ git: 'git@github.com:epfl-si/lhd.frontend.git', subdir: 'frontend' },
 	{ git: 'git@github.com:epfl-si/lhd.graphql.git', subdir: 'backend' },
+	{ git: 'git@github.com:epfl-si/epfl-elements-react', subdir: 'epfl-elements-react' },
 ];
 
 await parseCmdLineDoThingsAndCleanup();
