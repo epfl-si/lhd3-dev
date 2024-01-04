@@ -90,7 +90,7 @@ async function run() {
 	await gitCloneAll();
 	await $`cd keycloak && docker compose up -d`;
 	await $`cd frontend && yarn`;
-	await $`cd backend && yarn codegen && yarn`;
+	await $`cd backend && yarn && yarn codegen`;
 	await writeBackendDotEnv ();
 	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend,keycloak" "cd frontend && yarn start" "cd backend && yarn start" "cd keycloak && docker compose logs -f keycloak"`;
 }
