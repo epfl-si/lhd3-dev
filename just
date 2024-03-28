@@ -74,14 +74,19 @@ async function keybase_fs_read(path) {
 }
 
 async function writeBackendDotEnv () {
-	const lhdTestDbPassword = YAML.parse(
+	const lhdTestfile = YAML.parse(
 		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
-	).mysql.lhd_app.password;
+	);
+	const lhdTestDbPassword = lhdTestfile.mysql.lhd_app.password;
+	const lhdImapPassword = lhdTestfile.imap.password;
+	const lhdEncryptionKey = 'LHD_ENCRYPTION_KEY :: TEST';
 
 	await fs.writeFile(
 		'./backend/.env',
 		`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
 ALLOWED_GROUPS=lhd_acces_lecture
+LHD_IMAP_PASSWORD=${lhdImapPassword}
+LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 `
 	);
 }
