@@ -91,6 +91,23 @@ LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 	);
 }
 
+async function writeBackendDotEnvForDebug () {
+	const lhdTestfile = YAML.parse(
+		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
+	);
+	const lhdImapPassword = lhdTestfile.imap.password;
+	const lhdEncryptionKey = 'LHD_ENCRYPTION_KEY :: TEST';
+
+	await fs.writeFile(
+		'./backend/.env',
+		`LHD_DB_URL=mysql://root:ROOT@localhost:3307/lhd_test
+ALLOWED_GROUPS=lhd_acces_lecture
+LHD_IMAP_PASSWORD=${lhdImapPassword}
+LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
+`
+	);
+}
+
 async function run() {
 	await gitCloneAll();
 	await $`cd keycloak && docker compose up -d`;
@@ -117,6 +134,15 @@ async function runAuth() {
 	await gitCloneAll();
 	await $`cd keycloak && docker compose up -d`;
 	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "keycloak" "cd keycloak && docker compose logs -f keycloak"`;
+}
+
+async function runDebug() {
+	await gitCloneAll();
+	await $`cd keycloak && docker compose up -d`;
+	await $`cd frontend && yarn`;
+	await $`cd backend && yarn && yarn codegen`;
+	await writeBackendDotEnvForDebug ();
+	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend,keycloak" "cd frontend && yarn start" "cd keycloak && docker compose logs -f keycloak"`;
 }
 
 async function clean() {
@@ -153,6 +179,9 @@ async function parseCmdLineDoThingsAndCleanup() {
 	} else if (argv._[0] === 'pull') {
 		argv._.shift();
 		await gitPullAll(...argv._);
+	} else if (argv._[0] === 'debug') {
+		argv._.shift();
+		await runDebug(...argv._);
 	} else if (argv._[0] === 'clean') {
 		argv._.shift();
 		await clean(...argv._);
