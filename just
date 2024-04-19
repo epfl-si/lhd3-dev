@@ -87,6 +87,7 @@ async function writeBackendDotEnv () {
 ALLOWED_GROUPS=lhd_acces_lecture
 LHD_IMAP_PASSWORD=${lhdImapPassword}
 LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
+API_EPFL_CH_URL=api.epfl.ch
 `
 	);
 }
@@ -104,6 +105,7 @@ async function writeBackendDotEnvForDebug () {
 ALLOWED_GROUPS=lhd_acces_lecture
 LHD_IMAP_PASSWORD=${lhdImapPassword}
 LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
+API_EPFL_CH_URL=api-preprod.epfl.ch
 `
 	);
 }
