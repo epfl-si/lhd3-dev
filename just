@@ -86,7 +86,7 @@ async function writeBackendDotEnv () {
 			'./backend/.env',
 			`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
 			ALLOWED_GROUPS=lhd_acces_lecture
-			LHD_IMAP_PASSWORD=${lhdImapPassword}
+			LHD_API_PASSWORD=${lhdImapPassword}
 			LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 			API_EPFL_CH_URL=api.epfl.ch
 			HAZARD_DOCUMENT_FOLDER=/LHD_documents/upload/hazards/`
@@ -105,7 +105,7 @@ async function writeBackendDotEnvForDebug () {
 		'./backend/.env',
 		`LHD_DB_URL=mysql://root:ROOT@localhost:3307/lhd_test
 		ALLOWED_GROUPS=lhd_acces_lecture
-		LHD_IMAP_PASSWORD=${lhdImapPassword}
+		LHD_API_PASSWORD=${lhdImapPassword}
 		LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 		API_EPFL_CH_URL=api-preprod.epfl.ch
 		HAZARD_DOCUMENT_FOLDER=/LHD_documents/upload/hazards/`
