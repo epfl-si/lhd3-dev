@@ -81,15 +81,17 @@ async function writeBackendDotEnv () {
 	const lhdImapPassword = lhdTestfile.imap.password;
 	const lhdEncryptionKey = 'LHD_ENCRYPTION_KEY :: TEST';
 
-	await fs.writeFile(
-		'./backend/.env',
-		`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
+        if (! await fs.exists('./backend/.env')) {
+		await fs.writeFile(
+			'./backend/.env',
+			`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
 ALLOWED_GROUPS=lhd_acces_lecture
 LHD_IMAP_PASSWORD=${lhdImapPassword}
 LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 API_EPFL_CH_URL=api.epfl.ch
 `
-	);
+		);
+	}
 }
 
 async function writeBackendDotEnvForDebug () {
