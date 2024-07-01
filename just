@@ -79,7 +79,7 @@ async function writeBackendDotEnv () {
 	);
 	const lhdTestDbPassword = lhdTestfile.mysql.lhd_app.password;
 	const lhdImapPassword = lhdTestfile.imap.password;
-	const lhdEncryptionKey = 'LHD_ENCRYPTION_KEY :: TEST';
+	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
 
         if (! await fs.exists('./backend/.env')) {
 		await fs.writeFile(
@@ -99,7 +99,7 @@ async function writeBackendDotEnvForDebug () {
 		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
 	);
 	const lhdImapPassword = lhdTestfile.imap.password;
-	const lhdEncryptionKey = 'LHD_ENCRYPTION_KEY :: TEST';
+	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
 
 	await fs.writeFile(
 		'./backend/.env',
