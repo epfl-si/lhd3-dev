@@ -108,7 +108,7 @@ async function writeBackendDotEnvForDebug () {
 		LHD_API_PASSWORD=${lhdImapPassword}
 		LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 		API_EPFL_CH_URL=api-preprod.epfl.ch
-		HAZARD_DOCUMENT_FOLDER=/LHD_documents/upload/hazards/`
+		HAZARD_DOCUMENT_FOLDER=../LHD_documents/upload/hazards/`
 	);
 }
 
