@@ -7,14 +7,20 @@
     "attributes" : {
       "groups" : [ "lhd_acces_lecture" ]
     }
+  },{
+    "name" : "LHD_acces_admin",
+    "path" : "/LHD_acces_admin",
+    "attributes" : {
+      "groups" : [ "LHD_acces_admin" ]
+    }
   } ],
   "users" : [ {
     "username" : "demo",
     "enabled" : true,
     "totp" : false,
     "emailVerified" : false,
-    "firstName" : "",
-    "lastName" : "",
+    "firstName" : "Rosa",
+    "lastName" : "Maggi",
     "credentials" : [ {
       "type" : "password",
       "userLabel" : "The password is “demo”",
@@ -25,7 +31,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-rails" ],
     "notBefore" : 0,
-    "groups" : [ "/lhd_acces_lecture" ]
+    "groups" : [ "/lhd_acces_lecture", "/LHD_acces_admin" ]
   } ],
   "clients" : [
     {

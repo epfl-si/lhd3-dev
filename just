@@ -85,7 +85,7 @@ async function writeBackendDotEnv () {
 		await fs.writeFile(
 			'./backend/.env',
 			`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
-			ALLOWED_GROUPS=lhd_acces_lecture
+			ALLOWED_GROUPS=lhd_acces_lecture,LHD_acces_admin
 			LHD_API_PASSWORD=${lhdImapPassword}
 			LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 			API_EPFL_CH_URL=api.epfl.ch
@@ -104,7 +104,7 @@ async function writeBackendDotEnvForDebug () {
 	await fs.writeFile(
 		'./backend/.env',
 		`LHD_DB_URL=mysql://root:ROOT@localhost:3307/lhd_test
-		ALLOWED_GROUPS=lhd_acces_lecture
+		ALLOWED_GROUPS=lhd_acces_lecture,LHD_acces_admin
 		LHD_API_PASSWORD=${lhdImapPassword}
 		LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 		API_EPFL_CH_URL=api-preprod.epfl.ch
