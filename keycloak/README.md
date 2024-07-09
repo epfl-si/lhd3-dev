@@ -18,7 +18,7 @@
 
 ```
 docker compose down
-docker volume rm hellorails_mariadb
+docker volume rm lhdv3-keycloak_mariadb
 docker compose up
 ```
 
