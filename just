@@ -80,11 +80,13 @@ async function writeBackendDotEnv () {
 	const lhdTestDbPassword = lhdTestfile.mysql.lhd_app.password;
 	const lhdImapPassword = lhdTestfile.imap.password;
 	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
+	const lhdTestAdmDbPassword = lhdTestfile.mysql.lhd_admin.password;
 
 	if (! await fs.exists('./backend/.env')) {
 		await fs.writeFile(
 			'./backend/.env',
 			`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
+			SHADOW_DATABASE_URL=mysql://lhd_test_adm:${lhdTestAdmDbPassword}@localhost:33006/lhd_shadow_test
 			ALLOWED_GROUPS=lhd_acces_lecture,LHD_acces_admin
 			LHD_API_PASSWORD=${lhdImapPassword}
 			LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
@@ -102,16 +104,19 @@ async function writeBackendDotEnvForDebug () {
 	const lhdImapPassword = lhdTestfile.imap.password;
 	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
 
-	await fs.writeFile(
-		'./backend/.env',
-		`LHD_DB_URL=mysql://root:ROOT@localhost:3307/lhd_test
+	if (! await fs.exists('./backend/.env')) {
+		await fs.writeFile(
+			'./backend/.env',
+			`LHD_DB_URL=mysql://root:ROOT@localhost:3307/lhd_test
+		SHADOW_DATABASE_URL=mysql://root:ROOT@localhost:3307/lhd_shadow_test
 		ALLOWED_GROUPS=lhd_acces_lecture,LHD_acces_admin
 		LHD_API_PASSWORD=${lhdImapPassword}
 		LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 		API_EPFL_CH_URL=api-preprod.epfl.ch
 		HAZARD_DOCUMENT_FOLDER=hazards/
 		DOCUMENTS_PATH=../LHD_documents/upload`
-	);
+		);
+	}
 }
 
 async function run() {
