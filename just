@@ -74,16 +74,49 @@ async function keybase_fs_read(path) {
 }
 
 async function writeBackendDotEnv () {
-	const lhdTestDbPassword = YAML.parse(
+	const lhdTestfile = YAML.parse(
 		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
-	).mysql.lhd_app.password;
-
-	await fs.writeFile(
-		'./backend/.env',
-		`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
-ALLOWED_GROUPS=lhd_acces_lecture
-`
 	);
+	const lhdTestDbPassword = lhdTestfile.mysql.lhd_app.password;
+	const lhdImapPassword = lhdTestfile.imap.password;
+	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
+	const lhdTestAdmDbPassword = lhdTestfile.mysql.lhd_admin.password;
+
+	if (! await fs.exists('./backend/.env')) {
+		await fs.writeFile(
+			'./backend/.env',
+			`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
+			SHADOW_DATABASE_URL=mysql://lhd_test_adm:${lhdTestAdmDbPassword}@localhost:33006/lhd_shadow_test
+			ALLOWED_GROUPS=lhd_acces_lecture,LHD_acces_admin
+			LHD_API_PASSWORD=${lhdImapPassword}
+			LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
+			API_EPFL_CH_URL=api.epfl.ch
+			HAZARD_DOCUMENT_FOLDER=hazards/
+			DOCUMENTS_PATH=../LHD_documents/upload`
+		);
+	}
+}
+
+async function writeBackendDotEnvForDebug () {
+	const lhdTestfile = YAML.parse(
+		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
+	);
+	const lhdImapPassword = lhdTestfile.imap.password;
+	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
+
+	if (! await fs.exists('./backend/.env')) {
+		await fs.writeFile(
+			'./backend/.env',
+			`LHD_DB_URL=mysql://root:ROOT@localhost:3307/lhd_test
+		SHADOW_DATABASE_URL=mysql://root:ROOT@localhost:3307/lhd_shadow_test
+		ALLOWED_GROUPS=lhd_acces_lecture,LHD_acces_admin
+		LHD_API_PASSWORD=${lhdImapPassword}
+		LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
+		API_EPFL_CH_URL=api-preprod.epfl.ch
+		HAZARD_DOCUMENT_FOLDER=hazards/
+		DOCUMENTS_PATH=../LHD_documents/upload`
+		);
+	}
 }
 
 async function run() {
@@ -112,6 +145,16 @@ async function runAuth() {
 	await gitCloneAll();
 	await $`cd keycloak && docker compose up -d`;
 	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "keycloak" "cd keycloak && docker compose logs -f keycloak"`;
+}
+
+async function runDebug() {
+	await gitCloneAll();
+	await $`cd keycloak && docker compose up -d`;
+	await $`cd frontend && yarn`;
+	await $`cd backend && yarn && yarn codegen`;
+	await $`cd ../LHD && docker compose up -d db`;
+	await writeBackendDotEnvForDebug ();
+	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend,keycloak" "cd frontend && yarn start" "cd keycloak && docker compose logs -f keycloak"`;
 }
 
 async function clean() {
@@ -148,6 +191,9 @@ async function parseCmdLineDoThingsAndCleanup() {
 	} else if (argv._[0] === 'pull') {
 		argv._.shift();
 		await gitPullAll(...argv._);
+	} else if (argv._[0] === 'debug') {
+		argv._.shift();
+		await runDebug(...argv._);
 	} else if (argv._[0] === 'clean') {
 		argv._.shift();
 		await clean(...argv._);
