@@ -92,7 +92,9 @@ async function writeBackendDotEnv () {
 			API_EPFL_CH_URL=api.epfl.ch
 			CRISTAL_URL=cristal-test.epfl.ch
 			HAZARD_DOCUMENT_FOLDER=hazards/
-			DOCUMENTS_PATH=../LHD_documents/upload`
+			DOCUMENTS_PATH=../LHD_documents/upload
+            OIDC_BASE_URL=http://localhost:8080/realms/LHD
+            REACT_CLIENT_ID=LHDv3`
 		);
 	}
 }
@@ -114,7 +116,9 @@ async function writeBackendDotEnvForDebug () {
 		API_EPFL_CH_URL=api-preprod.epfl.ch
 		CRISTAL_URL=cristal-test.epfl.ch
 		HAZARD_DOCUMENT_FOLDER=hazards/
-		DOCUMENTS_PATH=../LHD_documents/upload`
+		DOCUMENTS_PATH=../LHD_documents/upload
+		OIDC_BASE_URL=http://localhost:8080/realms/LHD
+		REACT_CLIENT_ID=LHDv3`
 		);
 	}
 }
