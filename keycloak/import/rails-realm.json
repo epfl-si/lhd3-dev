@@ -2,7 +2,7 @@
   "realm" : "LHD",
   "enabled" : true,
   "groups" : [ {
-    "name" : "lhd_acces_lecture",
+    "name" : "LHD_acces_lecture",
     "path" : "/lhd_acces_lecture",
     "attributes" : {
       "groups" : [ "lhd_acces_lecture" ]
@@ -12,6 +12,18 @@
     "path" : "/LHD_acces_admin",
     "attributes" : {
       "groups" : [ "LHD_acces_admin" ]
+    }
+  },{
+    "name" : "LHD_acces_cosec",
+    "path" : "/LHD_acces_cosec",
+    "attributes" : {
+      "groups" : [ "LHD_acces_cosec" ]
+    }
+  },{
+    "name" : "LHD_acces",
+    "path" : "/LHD_acces",
+    "attributes" : {
+      "groups" : [ "LHD_acces" ]
     }
   } ],
   "users" : [ {
@@ -31,7 +43,7 @@
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-rails" ],
     "notBefore" : 0,
-    "groups" : [ "/lhd_acces_lecture", "/LHD_acces_admin" ]
+    "groups" : [ "/LHD_acces_admin", "/LHD_acces_lecture", "/LHD_acces" ]
   } ],
   "clients" : [
     {
