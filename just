@@ -94,7 +94,9 @@ async function writeBackendDotEnv () {
 			HAZARD_DOCUMENT_FOLDER=hazards/
 			DOCUMENTS_PATH=../LHD_documents/upload
             OIDC_BASE_URL=http://localhost:8080/realms/LHD
-            REACT_CLIENT_ID=LHDv3`
+            REACT_CLIENT_ID=LHDv3
+            SNOW_TOKEN=DEV
+            CATALYSE_TOKEN=DEV`
 		);
 	}
 }
@@ -110,15 +112,17 @@ async function writeBackendDotEnvForDebug () {
 		await fs.writeFile(
 			'./backend/.env',
 			`LHD_DB_URL=mysql://root:ROOT@localhost:3307/lhd_test
-		ALLOWED_GROUPS=LHD_acces,LHD_acces_lecture,LHD_acces_admin,LHD_acces_cosec
-		LHD_API_PASSWORD=${lhdImapPassword}
-		LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
-		API_EPFL_CH_URL=api-preprod.epfl.ch
-		CRISTAL_URL=cristal-test.epfl.ch
-		HAZARD_DOCUMENT_FOLDER=hazards/
-		DOCUMENTS_PATH=../LHD_documents/upload
-		OIDC_BASE_URL=http://localhost:8080/realms/LHD
-		REACT_CLIENT_ID=LHDv3`
+			ALLOWED_GROUPS=LHD_acces,LHD_acces_lecture,LHD_acces_admin,LHD_acces_cosec
+			LHD_API_PASSWORD=${lhdImapPassword}
+			LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
+			API_EPFL_CH_URL=api-preprod.epfl.ch
+			CRISTAL_URL=cristal-test.epfl.ch
+			HAZARD_DOCUMENT_FOLDER=hazards/
+			DOCUMENTS_PATH=../LHD_documents/upload
+			OIDC_BASE_URL=http://localhost:8080/realms/LHD
+			REACT_CLIENT_ID=LHDv3
+			SNOW_TOKEN=DEV
+			CATALYSE_TOKEN=DEV`
 		);
 	}
 }
