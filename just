@@ -92,10 +92,23 @@ async function writeBackendDotEnv () {
 			CRISTAL_URL=cristal-test.epfl.ch
 			HAZARD_DOCUMENT_FOLDER=hazards/
 			DOCUMENTS_PATH=../LHD_documents/upload
-            OIDC_BASE_URL=http://localhost:8080/realms/LHD
-            REACT_CLIENT_ID=LHDv3
-            SNOW_TOKEN=DEV
-            CATALYSE_TOKEN=DEV`
+			OIDC_BASE_URL=http://localhost:8080/realms/LHD
+			REACT_CLIENT_ID=LHDv3
+			SNOW_TOKEN=DEV
+			CATALYSE_TOKEN=DEV
+			SMTP_HOST=mail.epfl.ch
+			SMTP_PORT=587
+			SMTP_USER=lhd@epfl.ch
+			CAE_TO=cae@epfl.ch,philippe.vonallmen@epfl.ch
+			CAE_CC=OHS_notification_axs@groupes.epfl.ch
+			COSEC_BCC=OHS_notification_axs@groupes.epfl.ch
+			APP_BASE_PATH=http://localhost:3000
+			HAZARD_TYPES_TO_EMAIL_AFTER_UPDATE=Laser,Biological
+			ENVIRONMENT=DEV
+			CATALYSE_EMAIL=service_catalyse@epfl.ch
+			ADMIN_GROUP=LHD_acces_admin
+			COSEC_GROUP=LHD_acces_cosec
+			LHD_GROUP=LHD_acces_lecture`
 		);
 	}
 }
@@ -121,7 +134,20 @@ async function writeBackendDotEnvForDebug () {
 			OIDC_BASE_URL=http://localhost:8080/realms/LHD
 			REACT_CLIENT_ID=LHDv3
 			SNOW_TOKEN=DEV
-			CATALYSE_TOKEN=DEV`
+			CATALYSE_TOKEN=DEV
+			SMTP_HOST=mail.epfl.ch
+			SMTP_PORT=587
+			SMTP_USER=lhd@epfl.ch
+			CAE_TO=cae@epfl.ch,philippe.vonallmen@epfl.ch
+			CAE_CC=OHS_notification_axs@groupes.epfl.ch
+			COSEC_BCC=OHS_notification_axs@groupes.epfl.ch
+			APP_BASE_PATH=http://localhost:3000
+			HAZARD_TYPES_TO_EMAIL_AFTER_UPDATE=Laser,Biological
+			ENVIRONMENT=DEV
+			CATALYSE_EMAIL=service_catalyse@epfl.ch
+			ADMIN_GROUP=LHD_acces_admin
+			COSEC_GROUP=LHD_acces_cosec
+			LHD_GROUP=LHD_acces_lecture`
 		);
 	}
 }
