@@ -80,6 +80,9 @@ async function writeBackendDotEnv () {
 	const lhdImapPassword = lhdTestfile.imap.password;
 	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
 	const lhdTestAdmDbPassword = lhdTestfile.mysql.lhd_admin.password;
+	const mail_cae_to = lhdTestfile.email.cae_to;
+	const mail_cae_cc = lhdTestfile.email.cae_cc;
+	const mail_cosec_bcc = lhdTestfile.email.cosec_bcc;
 
 	if (! await fs.exists('./backend/.env')) {
 		await fs.writeFile(
@@ -92,10 +95,23 @@ async function writeBackendDotEnv () {
 			CRISTAL_URL=cristal-test.epfl.ch
 			HAZARD_DOCUMENT_FOLDER=hazards/
 			DOCUMENTS_PATH=../LHD_documents/upload
-            OIDC_BASE_URL=http://localhost:8080/realms/LHD
-            REACT_CLIENT_ID=LHDv3
-            SNOW_TOKEN=DEV
-            CATALYSE_TOKEN=DEV`
+			OIDC_BASE_URL=http://localhost:8080/realms/LHD
+			REACT_CLIENT_ID=LHDv3
+			SNOW_TOKEN=DEV
+			CATALYSE_TOKEN=DEV
+			SMTP_HOST=mail.epfl.ch
+			SMTP_PORT=587
+			SMTP_USER=lhd@epfl.ch
+			CAE_TO=${mail_cae_to}
+			CAE_CC=${mail_cae_cc}
+			COSEC_BCC=${mail_cosec_bcc}
+			APP_BASE_PATH=http://localhost:3000
+			HAZARD_TYPES_TO_EMAIL_AFTER_UPDATE=Laser,Biological
+			ENVIRONMENT=DEV
+			CATALYSE_EMAIL=service_catalyse@epfl.ch
+			ADMIN_GROUP=LHD_acces_admin
+			COSEC_GROUP=LHD_acces_cosec
+			LHD_GROUP=LHD_acces_lecture`
 		);
 	}
 }
@@ -106,6 +122,9 @@ async function writeBackendDotEnvForDebug () {
 	);
 	const lhdImapPassword = lhdTestfile.imap.password;
 	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
+	const mail_cae_to = lhdTestfile.email.cae_to;
+	const mail_cae_cc = lhdTestfile.email.cae_cc;
+	const mail_cosec_bcc = lhdTestfile.email.cosec_bcc;
 
 	if (! await fs.exists('./backend/.env')) {
 		await fs.writeFile(
@@ -121,7 +140,20 @@ async function writeBackendDotEnvForDebug () {
 			OIDC_BASE_URL=http://localhost:8080/realms/LHD
 			REACT_CLIENT_ID=LHDv3
 			SNOW_TOKEN=DEV
-			CATALYSE_TOKEN=DEV`
+			CATALYSE_TOKEN=DEV
+			SMTP_HOST=mail.epfl.ch
+			SMTP_PORT=587
+			SMTP_USER=lhd@epfl.ch
+			CAE_TO=${mail_cae_to}
+			CAE_CC=${mail_cae_cc}
+			COSEC_BCC=${mail_cosec_bcc}
+			APP_BASE_PATH=http://localhost:3000
+			HAZARD_TYPES_TO_EMAIL_AFTER_UPDATE=Laser,Biological
+			ENVIRONMENT=DEV
+			CATALYSE_EMAIL=service_catalyse@epfl.ch
+			ADMIN_GROUP=LHD_acces_admin
+			COSEC_GROUP=LHD_acces_cosec
+			LHD_GROUP=LHD_acces_lecture`
 		);
 	}
 }
