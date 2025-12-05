@@ -91,7 +91,7 @@ async function writeBackendDotEnv () {
 			HAZARD_DOCUMENT_FOLDER=hazards/
 			DOCUMENTS_PATH=../LHD_documents/upload
 			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0/
-			OIDC_CLIENT_ID=14f7c97f-8cae-4df0-8f3a-151e721cd86f
+			OIDC_CLIENT_ID=2c822adc-1365-4b59-931f-64cde59e7d20
 			SNOW_TOKEN=DEV
 			CATALYSE_TOKEN=DEV
 			SMTP_HOST=mail.epfl.ch
@@ -133,7 +133,7 @@ async function writeBackendDotEnvForDebug () {
 			HAZARD_DOCUMENT_FOLDER=hazards/
 			DOCUMENTS_PATH=../LHD_documents/upload
 			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0/
-			OIDC_CLIENT_ID=14f7c97f-8cae-4df0-8f3a-151e721cd86f
+			OIDC_CLIENT_ID=2c822adc-1365-4b59-931f-64cde59e7d20
 			SNOW_TOKEN=DEV
 			CATALYSE_TOKEN=DEV
 			SMTP_HOST=mail.epfl.ch
