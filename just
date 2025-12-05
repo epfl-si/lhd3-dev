@@ -14,8 +14,6 @@ Usage: just [command]
 
 Commands:
   run      Clone git repositories, install dependencies, start servers.
-  clean    Stop and remove containers started by keycloak compose.
-  purge    Remove the keycloak_mariadb docker volume used by keycloak.
   unclone  Remove cloned repositories.
 
 Options:
@@ -24,8 +22,6 @@ Options:
 
 Examples:
   just run OR just
-  just clean
-  just purge
   just unclone
   `)
 	);
@@ -162,11 +158,10 @@ async function writeBackendDotEnvForDebug () {
 
 async function run() {
 	await gitCloneAll();
-	await $`cd keycloak && docker compose up -d`;
 	await $`cd frontend && yarn`;
 	await $`cd backend && yarn && yarn codegen`;
 	await writeBackendDotEnv ();
-	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend,keycloak" "cd frontend && yarn start" "cd backend && yarn start" "cd keycloak && docker compose logs -f keycloak"`;
+	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend" "cd frontend && yarn start" "cd backend && yarn start"`;
 }
 
 async function runFrontend() {
@@ -182,29 +177,13 @@ async function runBackend() {
 	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "backend" "cd backend && yarn start"`;
 }
 
-async function runAuth() {
-	await gitCloneAll();
-	await $`cd keycloak && docker compose up -d`;
-	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "keycloak" "cd keycloak && docker compose logs -f keycloak"`;
-}
-
 async function runDebug() {
 	await gitCloneAll();
-	await $`cd keycloak && docker compose up -d`;
 	await $`cd frontend && yarn`;
 	await $`cd backend && yarn && yarn codegen`;
 	await $`cd ../LHD && docker compose up -d db`;
 	await writeBackendDotEnvForDebug ();
-	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend,keycloak" "cd frontend && yarn start" "cd keycloak && docker compose logs -f keycloak"`;
-}
-
-async function clean() {
-	await $`cd keycloak && docker compose down`;
-}
-
-async function purge() {
-	await clean();
-	await $`docker volume rm keycloak_mariadb`;
+	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend" "cd frontend && yarn start"`;
 }
 
 async function parseCmdLineDoThingsAndCleanup() {
@@ -226,21 +205,12 @@ async function parseCmdLineDoThingsAndCleanup() {
 	} else if (argv._[0] === 'backend') {
 		argv._.shift();
 		await runBackend(...argv._);
-	} else if (argv._[0] === 'auth') {
-		argv._.shift();
-		await runAuth(...argv._);
 	} else if (argv._[0] === 'pull') {
 		argv._.shift();
 		await gitPullAll(...argv._);
 	} else if (argv._[0] === 'debug') {
 		argv._.shift();
 		await runDebug(...argv._);
-	} else if (argv._[0] === 'clean') {
-		argv._.shift();
-		await clean(...argv._);
-	} else if (argv._[0] === 'purge') {
-		argv._.shift();
-		await purge(...argv._);
 	} else if (argv._[0] === 'unclone') {
 		argv._.shift();
 		await unclone(...argv._);
