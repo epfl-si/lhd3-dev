@@ -88,15 +88,14 @@ async function writeBackendDotEnv () {
 		await fs.writeFile(
 			'./backend/.env',
 			`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
-			ALLOWED_GROUPS=LHD_acces,LHD_acces_lecture,LHD_acces_admin,LHD_acces_cosec
 			LHD_API_PASSWORD=${lhdImapPassword}
 			LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 			API_EPFL_CH_URL=api.epfl.ch
 			CRISTAL_URL=cristal-test.epfl.ch
 			HAZARD_DOCUMENT_FOLDER=hazards/
 			DOCUMENTS_PATH=../LHD_documents/upload
-			OIDC_BASE_URL=http://localhost:8080/realms/LHD
-			REACT_CLIENT_ID=LHDv3
+			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0/
+			OIDC_CLIENT_ID=14f7c97f-8cae-4df0-8f3a-151e721cd86f
 			SNOW_TOKEN=DEV
 			CATALYSE_TOKEN=DEV
 			SMTP_HOST=mail.epfl.ch
@@ -109,9 +108,10 @@ async function writeBackendDotEnv () {
 			HAZARD_TYPES_TO_EMAIL_AFTER_UPDATE=Laser,Biological
 			ENVIRONMENT=DEV
 			CATALYSE_EMAIL=service_catalyse@epfl.ch
-			ADMIN_GROUP=LHD_acces_admin
-			COSEC_GROUP=LHD_acces_cosec
-			LHD_GROUP=LHD_acces_lecture`
+			ALLOWED_GROUPS=LHD_acces_AppGrpU,LHD_acces_lecture_AppGrpU,LHD_acces_admin_AppGrpU,LHD_acces_cosec_AppGrpU
+			ADMIN_GROUP=LHD_acces_admin_AppGrpU
+			LHD_GROUP=LHD_acces_lecture_AppGrpU
+			COSEC_GROUP=LHD_acces_cosec_AppGrpU`
 		);
 	}
 }
@@ -130,15 +130,14 @@ async function writeBackendDotEnvForDebug () {
 		await fs.writeFile(
 			'./backend/.env',
 			`LHD_DB_URL=mysql://root:ROOT@localhost:3307/lhd_test
-			ALLOWED_GROUPS=LHD_acces,LHD_acces_lecture,LHD_acces_admin,LHD_acces_cosec
 			LHD_API_PASSWORD=${lhdImapPassword}
 			LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 			API_EPFL_CH_URL=api-preprod.epfl.ch
 			CRISTAL_URL=cristal-test.epfl.ch
 			HAZARD_DOCUMENT_FOLDER=hazards/
 			DOCUMENTS_PATH=../LHD_documents/upload
-			OIDC_BASE_URL=http://localhost:8080/realms/LHD
-			REACT_CLIENT_ID=LHDv3
+			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0/
+			OIDC_CLIENT_ID=14f7c97f-8cae-4df0-8f3a-151e721cd86f
 			SNOW_TOKEN=DEV
 			CATALYSE_TOKEN=DEV
 			SMTP_HOST=mail.epfl.ch
@@ -153,7 +152,10 @@ async function writeBackendDotEnvForDebug () {
 			CATALYSE_EMAIL=service_catalyse@epfl.ch
 			ADMIN_GROUP=LHD_acces_admin
 			COSEC_GROUP=LHD_acces_cosec
-			LHD_GROUP=LHD_acces_lecture`
+			ALLOWED_GROUPS=LHD_acces_AppGrpU,LHD_acces_lecture_AppGrpU,LHD_acces_admin_AppGrpU,LHD_acces_cosec_AppGrpU
+			ADMIN_GROUP=LHD_acces_admin_AppGrpU
+			LHD_GROUP=LHD_acces_lecture_AppGrpU
+			COSEC_GROUP=LHD_acces_cosec_AppGrpU`
 		);
 	}
 }
