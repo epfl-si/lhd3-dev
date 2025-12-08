@@ -90,7 +90,8 @@ async function writeBackendDotEnv () {
 			CRISTAL_URL=cristal-test.epfl.ch
 			HAZARD_DOCUMENT_FOLDER=hazards/
 			DOCUMENTS_PATH=../LHD_documents/upload
-			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0/
+			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0
+			OIDC_KEYS_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/discovery/v2.0/keys
 			OIDC_CLIENT_ID=2c822adc-1365-4b59-931f-64cde59e7d20
 			SNOW_TOKEN=DEV
 			CATALYSE_TOKEN=DEV
@@ -132,7 +133,8 @@ async function writeBackendDotEnvForDebug () {
 			CRISTAL_URL=cristal-test.epfl.ch
 			HAZARD_DOCUMENT_FOLDER=hazards/
 			DOCUMENTS_PATH=../LHD_documents/upload
-			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0/
+			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0
+			OIDC_KEYS_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/discovery/v2.0/keys
 			OIDC_CLIENT_ID=2c822adc-1365-4b59-931f-64cde59e7d20
 			SNOW_TOKEN=DEV
 			CATALYSE_TOKEN=DEV
