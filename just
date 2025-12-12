@@ -93,8 +93,10 @@ async function writeBackendDotEnv () {
 			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0
 			OIDC_KEYS_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/discovery/v2.0/keys
 			OIDC_CLIENT_ID=2c822adc-1365-4b59-931f-64cde59e7d20
-			SNOW_TOKEN=DEV
-			CATALYSE_TOKEN=DEV
+			SNOW_TOKEN=DEV_SNOW
+			CATALYSE_TOKEN=DEV_CATALYSE
+			AXS_TOKEN=DEV_AXS
+			ALLOWED_IPS=127.0.0.1
 			SMTP_HOST=mail.epfl.ch
 			SMTP_PORT=587
 			SMTP_USER=lhd@epfl.ch
@@ -136,8 +138,10 @@ async function writeBackendDotEnvForDebug () {
 			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0
 			OIDC_KEYS_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/discovery/v2.0/keys
 			OIDC_CLIENT_ID=2c822adc-1365-4b59-931f-64cde59e7d20
-			SNOW_TOKEN=DEV
-			CATALYSE_TOKEN=DEV
+			SNOW_TOKEN=DEV_SNOW
+			CATALYSE_TOKEN=DEV_CATALYSE
+			AXS_TOKEN=DEV_AXS
+			ALLOWED_IPS=127.0.0.1
 			SMTP_HOST=mail.epfl.ch
 			SMTP_PORT=587
 			SMTP_USER=lhd@epfl.ch
