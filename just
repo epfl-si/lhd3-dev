@@ -97,6 +97,7 @@ async function writeBackendDotEnv () {
 			CATALYSE_TOKEN=DEV_CATALYSE
 			AXS_TOKEN=DEV_AXS
 			ALLOWED_IPS=127.0.0.1
+			AXP_BIO_SIGNATURES_GROUP=LHD_dangers_bio
 			SMTP_HOST=mail.epfl.ch
 			SMTP_PORT=587
 			SMTP_USER=lhd@epfl.ch
@@ -142,6 +143,7 @@ async function writeBackendDotEnvForDebug () {
 			CATALYSE_TOKEN=DEV_CATALYSE
 			AXS_TOKEN=DEV_AXS
 			ALLOWED_IPS=127.0.0.1
+			AXP_BIO_SIGNATURES_GROUP=LHD_dangers_bio
 			SMTP_HOST=mail.epfl.ch
 			SMTP_PORT=587
 			SMTP_USER=lhd@epfl.ch
