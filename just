@@ -89,6 +89,7 @@ async function writeBackendDotEnv () {
 			API_EPFL_CH_URL=api.epfl.ch
 			CRISTAL_URL=cristal-test.epfl.ch
 			HAZARD_DOCUMENT_FOLDER=hazards/
+			DISPENSATION_DOCUMENT_FOLDER=dispensations/
 			DOCUMENTS_PATH=../LHD_documents/upload
 			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0
 			OIDC_KEYS_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/discovery/v2.0/keys
@@ -135,6 +136,7 @@ async function writeBackendDotEnvForDebug () {
 			API_EPFL_CH_URL=api-preprod.epfl.ch
 			CRISTAL_URL=cristal-test.epfl.ch
 			HAZARD_DOCUMENT_FOLDER=hazards/
+			DISPENSATION_DOCUMENT_FOLDER=dispensations/
 			DOCUMENTS_PATH=../LHD_documents/upload
 			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0
 			OIDC_KEYS_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/discovery/v2.0/keys
