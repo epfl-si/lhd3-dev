@@ -76,7 +76,6 @@ async function writeBackendDotEnv () {
 	const lhdTestDbPassword = lhdTestfile.mysql.lhd_app.password;
 	const lhdImapPassword = lhdTestfile.imap.password;
 	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
-	const lhdTestAdmDbPassword = lhdTestfile.mysql.lhd_admin.password;
 	const mail_cae_to = lhdTestfile.email.cae_to;
 	const mail_cae_cc = lhdTestfile.email.cae_cc;
 	const mail_cosec_bcc = lhdTestfile.email.cosec_bcc;
@@ -110,10 +109,10 @@ async function writeBackendDotEnv () {
 			HAZARD_TYPES_TO_EMAIL_AFTER_UPDATE=Laser,Biological
 			ENVIRONMENT=DEV
 			CATALYSE_EMAIL=service_catalyse@epfl.ch
-			ALLOWED_GROUPS=LHD_acces_AppGrpU,LHD_acces_lecture_AppGrpU,LHD_acces_admin_AppGrpU,LHD_acces_cosec_AppGrpU
-			ADMIN_GROUP=LHD_acces_admin_AppGrpU
-			LHD_GROUP=LHD_acces_lecture_AppGrpU
-			COSEC_GROUP=LHD_acces_cosec_AppGrpU`
+			ALLOWED_GROUPS=LHD_acces_AppGrpU,svc1172lhd_Standard_AppGrpU,svc1172lhd_Admin_AppGrpU,svc1172lhd_Cosec_AppGrpU
+			ADMIN_GROUP=svc1172lhd_Admin_AppGrpU
+			LHD_GROUP=svc1172lhd_Standard_AppGrpU
+			COSEC_GROUP=svc1172lhd_Cosec_AppGrpU`
 		);
 	}
 }
@@ -157,12 +156,12 @@ async function writeBackendDotEnvForDebug () {
 			HAZARD_TYPES_TO_EMAIL_AFTER_UPDATE=Laser,Biological
 			ENVIRONMENT=DEV
 			CATALYSE_EMAIL=service_catalyse@epfl.ch
-			ADMIN_GROUP=LHD_acces_admin
-			COSEC_GROUP=LHD_acces_cosec
-			ALLOWED_GROUPS=LHD_acces_AppGrpU,LHD_acces_lecture_AppGrpU,LHD_acces_admin_AppGrpU,LHD_acces_cosec_AppGrpU
-			ADMIN_GROUP=LHD_acces_admin_AppGrpU
-			LHD_GROUP=LHD_acces_lecture_AppGrpU
-			COSEC_GROUP=LHD_acces_cosec_AppGrpU`
+			ADMIN_GROUP=svc1172lhd_Admin
+			COSEC_GROUP=svc1172lhd_Cosec
+			ALLOWED_GROUPS=LHD_acces_AppGrpU,svc1172lhd_Standard_AppGrpU,svc1172lhd_Admin_AppGrpU,svc1172lhd_Cosec_AppGrpU
+			ADMIN_GROUP=svc1172lhd_Admin_AppGrpU
+			LHD_GROUP=svc1172lhd_Standard_AppGrpU
+			COSEC_GROUP=svc1172lhd_Cosec_AppGrpU`
 		);
 	}
 }
