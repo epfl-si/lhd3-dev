@@ -198,10 +198,9 @@ async function runBackend() {
 async function runDebug() {
 	await gitCloneAll();
 	await $`cd frontend && yarn`;
-	await $`cd backend && yarn && yarn codegen`;
-	await $`cd ../LHD && docker compose up -d db`;
+	await $`docker compose up dbpostgresql -d`;
 	await writeBackendDotEnvForDebug ();
-	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend" "cd frontend && yarn start"`;
+	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend" "cd frontend && yarn start"`;
 }
 
 async function parseCmdLineDoThingsAndCleanup() {
