@@ -9,3 +9,13 @@ services:
        - 127.0.0.1:3307:3306
       networks:
         - default
+
+    dbpostgresql:
+      image: postgres:18.1
+      container_name: lhd-postgres
+      environment:
+        - POSTGRES_USER=root
+        - POSTGRES_PASSWORD=ROOT
+        - POSTGRES_DB=lhd
+      ports:
+        - 127.0.0.1:45432:5432
