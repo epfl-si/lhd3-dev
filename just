@@ -3,6 +3,7 @@
 const gitRepositories = [
 	{ git: 'git@github.com:epfl-si/lhd.frontend.git', subdir: 'frontend' },
 	{ git: 'git@github.com:epfl-si/lhd.graphql.git', subdir: 'backend' },
+	{ git: 'git@github.com:epfl-si/lhd.backend.git', subdir: 'backend_v2' },
 	{ git: 'git@github.com:epfl-si/lhd.ops.git', subdir: 'ops' },
 ];
 
@@ -71,60 +72,7 @@ async function keybase_fs_read(path) {
 
 async function writeBackendDotEnv () {
 	const lhdTestfile = YAML.parse(
-		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
-	);
-	const lhdTestDbPassword = lhdTestfile.mysql.lhd_app.password;
-	const lhdImapPassword = lhdTestfile.imap.password;
-	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
-	const mail_cae_to = lhdTestfile.email.cae_to;
-	const mail_cae_cc = lhdTestfile.email.cae_cc;
-	const mail_cosec_bcc = lhdTestfile.email.cosec_bcc;
-
-	if (! await fs.exists('./backend/.env')) {
-		await fs.writeFile(
-			'./backend/.env',
-			`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
-			LHD_API_PASSWORD=${lhdImapPassword}
-			LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
-			ALLOWED_GROUPS=svc1172lhd_Admin_AppGrpU,svc1172lhd_Cosec_AppGrpU,svc1172lhd_Standard_AppGrpU
-			API_EPFL_CH_URL=api.epfl.ch
-			CRISTAL_URL=cristal-test.epfl.ch
-			HAZARD_DOCUMENT_FOLDER=hazards/
-			DISPENSATION_DOCUMENT_FOLDER=dispensations
-			ASSESSMENT_DECISION_DOCUMENT_FOLDER=assessment_decision
-			AUTHORIZATION_DOCUMENT_FOLDER=authorizations
-			DOCUMENTS_PATH=../LHD_documents/upload
-			OIDC_BASE_URL=https://login.microsoftonline.com/f6c2556a-c4fb-4ab1-a2c7-9e220df11c43/v2.0
-			OIDC_CLIENT_ID=2c822adc-1365-4b59-931f-64cde59e7d20
-			SNOW_TOKEN=DEV_SNOW
-			CATALYSE_TOKEN=DEV_CATALYSE
-			AXS_TOKEN=DEV_AXS
-			CRONJOBS_EMAIL=YOUR_EMAIL@epfl.ch
-			AXS_ALLOWED_IPS=127.0.0.1,::1
-			AXP_BIO_SIGNATURES_GROUP=LHD_dangers_bio
-			SMTP_HOST=mail.epfl.ch
-			SMTP_PORT=587
-			SMTP_USER=lhd@epfl.ch
-			CAE_TO=${mail_cae_to}
-			CAE_CC=${mail_cae_cc}
-			COSEC_BCC=${mail_cosec_bcc}
-			DISPENSATION_CC=LHD-notification-dispensation@groupes.epfl.ch
-			APP_BASE_PATH=http://localhost:3000
-			HAZARD_TYPES_TO_EMAIL_AFTER_UPDATE=Laser,Biological
-			ENVIRONMENT=DEV
-			CATALYSE_EMAIL=service_catalyse@epfl.ch
-			LIL_URL=https://lil-test.epfl.ch/
-			ADMIN_GROUP=svc1172lhd_Admin_AppGrpU
-			COSEC_GROUP=svc1172lhd_Cosec_AppGrpU
-			LHD_GROUP=svc1172lhd_Standard_AppGrpU
-			NODE_ENV=test`
-		);
-	}
-}
-
-async function writeBackendDotEnvForDebug () {
-	const lhdTestfile = YAML.parse(
-		await keybase_fs_read('/keybase/team/epfl_lhd/secrets_test.yml')
+		await keybase_fs_read( '/keybase/team/epfl_lhd/secrets_test.yml' )
 	);
 	const lhdImapPassword = lhdTestfile.imap.password;
 	const lhdEncryptionKey = lhdTestfile.lhd_encryption_key;
@@ -132,10 +80,10 @@ async function writeBackendDotEnvForDebug () {
 	const mail_cae_cc = lhdTestfile.email.cae_cc;
 	const mail_cosec_bcc = lhdTestfile.email.cosec_bcc;
 
-	if (! await fs.exists('./backend/.env')) {
+	if ( !await fs.exists( './backend_v2/.env' ) ) {
 		await fs.writeFile(
-			'./backend/.env',
-			`LHD_DB_URL=mysql://lhd_test_app:${lhdTestDbPassword}@localhost:33006/lhd_test
+			'./backend_v2/.env',
+			`LHD_DB_URL=postgresql://root:ROOT@localhost:45432/lhd?schema=public
 			LHD_API_PASSWORD=${lhdImapPassword}
 			LHD_ENCRYPTION_KEY=${lhdEncryptionKey}
 			ALLOWED_GROUPS=svc1172lhd_Admin_AppGrpU,svc1172lhd_Cosec_AppGrpU,svc1172lhd_Standard_AppGrpU
@@ -177,9 +125,10 @@ async function writeBackendDotEnvForDebug () {
 async function run() {
 	await gitCloneAll();
 	await $`cd frontend && yarn`;
-	await $`cd backend && yarn && yarn codegen`;
+	await $`docker compose up dbpostgresql -d`;
+	await $`cd backend_v2 && npm i && npx prisma generate`;
 	await writeBackendDotEnv ();
-	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend" "cd frontend && yarn start" "cd backend && yarn start"`;
+	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend,backend_v2" "cd frontend && yarn start" "cd backend_v2 && npm run dev"`;
 }
 
 async function runFrontend() {
@@ -190,16 +139,17 @@ async function runFrontend() {
 
 async function runBackend() {
 	await gitCloneAll();
-	await $`cd backend && yarn`;
+	await $`cd backend_v2 && npm && npx prisma generate`;
 	await writeBackendDotEnv ();
-	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "backend" "cd backend && yarn start"`;
+	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "backend_v2" "cd backend_v2 && npm run dev"`;
 }
 
 async function runDebug() {
 	await gitCloneAll();
 	await $`cd frontend && yarn`;
 	await $`docker compose up dbpostgresql -d`;
-	await writeBackendDotEnvForDebug ();
+	await $`cd backend_v2 && npm i && npx prisma generate`;
+	await writeBackendDotEnv ();
 	await $`npx --package concurrently@latest -y concurrently --kill-others-on-fail --names "frontend" "cd frontend && yarn start"`;
 }
 
